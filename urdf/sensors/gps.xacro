@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <joint name="gps_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="gps_frame"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+    </joint>
+
+    <link name="gps_frame">
+        <visual>
+            <geometry>
+                <box size="0.02 0.02 0.02"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        <xacro:inertial_box mass="0.01" x="0.2" y="0.2" z="0.2">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <gazebo reference="gps_frame">
+        <sensor name="gps" type="gps">
+          <always_on>true</always_on>
+          <update_rate>5.0</update_rate>
+          <gps>
+            <position_sensing>
+              <horizontal>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>0.0</stddev>
+                </noise>
+              </horizontal>
+              <vertical>
+                <noise type="gaussian">
+                  <mean>0.0</mean>
+                  <stddev>0.0</stddev>
+                </noise>
+              </vertical>
+            </position_sensing>
+          </gps>
+          <plugin name="gps_plugin" filename="libgazebo_ros_gps_sensor.so">
+            <ros>
+              <remapping>~/out:=gps/fix</remapping>
+            </ros>
+          </plugin>
+        </sensor>
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+</robot>
