@@ -29,7 +29,7 @@
         <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
           <ros>
             <!-- <namespace>/br</namespace> -->
-            <remapping>imu_plugin/out:=twist</remapping>
+            <remapping>imu_plugin/out:=imu/data</remapping>
           </ros>
           <topicName>imu</topicName>
           <bodyName>imu_frame</bodyName>
