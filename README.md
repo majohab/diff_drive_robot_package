@@ -21,3 +21,14 @@ ros2 launch <launch file>.launch.py
 
 ## Sources
 The package is mainly derived from the package of [joshnewans](https://github.com/joshnewans) from Articulated Robotics from his series on [Making a Mobile Robot with ROS](https://articulatedrobotics.xyz/mobile-robot-full-list/). Which is a very helpful series for beginners that want to get into building robots with ros. 
+
+## Problems that occured
+- <b> gzserver crashes while loading camera plugin </b> <br>
+    Error:
+    ``` 
+    gzclient: /usr/include/boost/smart_ptr/shared_ptr.hpp:728: typename     boost::detail::sp_member_access<T>::type boost::shared_ptr<T>::operator->() const [with T =     gazebo::rendering::Camera; typename boost::detail::sp_member_access<T>::type =  gazebo::rendering::Camera*]: Assertion `px != 0' failed.
+    ```
+    Solution: 
+    ```
+    . /usr/share/gazebo/setup.sh
+    ```

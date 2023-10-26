@@ -4,11 +4,13 @@ from ament_index_python.packages import get_package_share_directory
 
 
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, EnvironmentVariable
+
 
 from launch_ros.actions import Node
+from scripts import GazeboRosPaths
 
 package_name='diff_drive_robot_package'
 
@@ -16,6 +18,15 @@ def generate_launch_description():
 
     # Check if odom tf should be published
     publish_odom = LaunchConfiguration('publish_odom') # only relevant if ros2_control=true
+
+    # set paths
+    model_path, plugin_path, media_path = GazeboRosPaths.get_paths()
+    print(f"The following gazebo paths where detected: model_path: {model_path}, plugin_path: {plugin_path}, media_path: {media_path}")
+
+    # set env variables
+    SetEnvironmentVariable(name='GAZEBO_MODEL_PATH', value=[EnvironmentVariable('GAZEBO_MODEL_PATH'), model_path])
+    SetEnvironmentVariable(name='GAZEBO_PLUGIN_PATH', value=[EnvironmentVariable('GAZEBO_PLUGIN_PATH'), plugin_path])
+    SetEnvironmentVariable(name='GAZEBO_RESOURCE_PATH', value=[EnvironmentVariable('GAZEBO_RESOURCE_PATH'), media_path])
 
     # launch rsp
     rsp = IncludeLaunchDescription(
